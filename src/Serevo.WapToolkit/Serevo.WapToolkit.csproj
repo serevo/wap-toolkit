@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>Toolkit for Windows Application Package (MSIX)</Title>
+    <Version>1.0.0-rc.1</Version>
+    <Authors>SHINSEI ELECTRONICS</Authors>
+    <Description>Toolkit for Windows Application Package (MSIX)</Description>
+    <Copyright>© 2023 SHINSEI ELECTRONICS CO,.LTD.</Copyright>
+    <PackageProjectUrl>https://github.com/serevo/wap-toolkit</PackageProjectUrl>
+    <PackageTags>Desktop Bridge;MSIX;SettingsProvider;</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
