@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Windows.Storage;
 
-namespace Serevo
+namespace Serevo.WapToolkit
 {
     /// <summary>
     /// Provide the <see cref="SettingsProvider"/> to read and write from/to <see cref="ApplicationData"/> (<see cref="ApplicationDataContainer"/>).
