@@ -29,12 +29,19 @@ namespace DemoWinFormsApp
 
         void Form1_Load(object sender, EventArgs e)
         {
-            var configRL = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
-            var configR = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
-            textBox1.Text = configRL.FilePath;
-            textBox2.Text = configR.FilePath;
+            textBox1.Text = $@"
+{"ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal)"}: {ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath}
+{"ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming)"}: {ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming).FilePath}
+{"Application.CommonAppDataPath"}: {Application.CommonAppDataPath}
+{"Application.UserAppDataPath"}: {Application.UserAppDataPath}
+{"Application.LocalUserAppDataPath"}: {Application.LocalUserAppDataPath}
+{"Environment.SpecialFolder.CommonApplicationData"}: {Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}
+{"Environment.SpecialFolder.ApplicationData"}: {Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}
+{"Environment.SpecialFolder.LocalApplicationData)"}: {Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}
+";
 
             var hasPackage = HasPackage();
+
             textBox3.Text = hasPackage ? Windows.Storage.ApplicationData.Current.LocalFolder.Path : null;
             textBox4.Text = hasPackage ? Windows.Storage.ApplicationData.Current.RoamingFolder.Path : null;
             textBox5.Text = hasPackage ? Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path : null;
@@ -74,30 +81,6 @@ namespace DemoWinFormsApp
         {
             Settings2.Default.Upgrade();
             checkBox2.Checked = Settings2.Default.BooleanValue2;
-        }
-
-        void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Process.Start(textBox1.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        void button2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Process.Start(textBox2.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
         void button3_Click(object sender, EventArgs e)
