@@ -50,12 +50,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Serevo.WapToolKit\Serevo.WapToolkit.csproj">
-      <Project>{e79e5669-318c-42eb-b045-2e3f1591fc88}</Project>
-      <Name>Serevo.WapToolkit</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -65,6 +59,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings2.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Serevo.WapToolKit\Serevo.WapToolkit.csproj">
+      <Project>{e79e5669-318c-42eb-b045-2e3f1591fc88}</Project>
+      <Name>Serevo.WapToolkit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
