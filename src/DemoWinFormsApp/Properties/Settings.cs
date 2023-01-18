@@ -3,7 +3,7 @@
 namespace DemoWinFormsApp.Properties
 {
 
-    [SettingsProvider(typeof(Serevo.WapDataContainerSettingsProvider))]
+    [SettingsProvider(typeof(Serevo.WapToolkit.WapDataContainerSettingsProvider))]
     internal sealed partial class Settings
     {
         public Settings()
