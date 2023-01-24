@@ -6,7 +6,7 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>snkey.snk</AssemblyOriginatorKeyFile>
     <Title>Toolkit for Windows Application Package (MSIX)</Title>
-    <Version>1.0.0-rc.2</Version>
+    <Version>1.0.0-rc.3</Version>
     <Authors>SHINSEI ELECTRONICS</Authors>
     <Description>Toolkit for Windows Application Package (MSIX)</Description>
     <Copyright>© 2023 SHINSEI ELECTRONICS CO,.LTD.</Copyright>
