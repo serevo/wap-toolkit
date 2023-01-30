@@ -4,7 +4,7 @@
     <TargetFramework>net462</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>snkey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>strong-name-key.snk</AssemblyOriginatorKeyFile>
     <RepositoryUrl>https://github.com/serevo/storex-sdk</RepositoryUrl>
     <Title>Toolkit for Windows Application Package (MSIX)</Title>
     <Version>1.0.0-rc.3</Version>
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="snkey.snk" />
+    <None Remove="strong-name-key.snk" />
   </ItemGroup>
 
   <ItemGroup>
