@@ -12,10 +12,10 @@ namespace Serevo.WapToolkit
     /// <summary>
     /// Provide the <see cref="SettingsProvider"/> to read and write from/to <see cref="ApplicationData"/> (<see cref="ApplicationDataContainer"/>).
     /// <para>Note: <see cref="IApplicationSettingsProvider"/> is not inherited. So the some fanctions (<see cref=" ApplicationSettingsBase.Reset"/>, <see cref="ApplicationSettingsBase.Upgrade"/>, and more) are not work.</para> 
-    /// <para>Note: <see cref="ApplicationScopedSettingAttribute"/> is not suppoered. Please Divide the value to other Settings class (No specify <see cref="SettingsProviderAttribute"/> to use <see cref="LocalFileSettingsProvider"/>).</para> 
+    /// <para>Note: <see cref="ApplicationScopedSettingAttribute"/> is not suppoered. Please Divide the value to other Settings class (No specify <see cref="SettingsProviderAttribute"/>).</para> 
     /// </summary>
     /// <code>
-    /// [SettingsProvider(typeof(<see cref="SettingsProvider"/>))]
+    /// [SettingsProvider(typeof(<see cref="WapDataContainerSettingsProvider"/>))]
     /// partial class Settings { }
     /// </code>
     public sealed class WapDataContainerSettingsProvider : SettingsProvider
