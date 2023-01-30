@@ -6,15 +6,16 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>strong-name-key.snk</AssemblyOriginatorKeyFile>
     <RepositoryUrl>https://github.com/serevo/storex-sdk</RepositoryUrl>
-    <Title>Toolkit for Windows Application Package (MSIX)</Title>
-    <Version>1.0.0-rc.3</Version>
+    <Title>WAP Toolkit</Title>
+    <Version>1.0.0</Version>
     <Authors>SHINSEI ELECTRONICS</Authors>
-    <Description>Toolkit for Windows Application Package (MSIX)</Description>
+    <Description>WAP Toolkit: This is the toolkit for Windows Application Package (MSIX). This package is versioned according to SemVer (Semantic Versioning) 2.0.0</Description>
     <Copyright>© 2023 SHINSEI ELECTRONICS CO,.LTD.</Copyright>
     <PackageProjectUrl>https://github.com/serevo/wap-toolkit</PackageProjectUrl>
-    <PackageTags>Desktop Bridge;MSIX;SettingsProvider;</PackageTags>
+    <PackageTags>WAP;MSIX;Bridge;SettingsProvider;Settings;SettingsBase</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,17 @@
 
   <ItemGroup>
     <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Assets\readme.md" Link="Assets\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
