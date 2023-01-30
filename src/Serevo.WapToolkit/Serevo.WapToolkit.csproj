@@ -5,6 +5,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>snkey.snk</AssemblyOriginatorKeyFile>
+    <RepositoryUrl>https://github.com/serevo/storex-sdk</RepositoryUrl>
     <Title>Toolkit for Windows Application Package (MSIX)</Title>
     <Version>1.0.0-rc.3</Version>
     <Authors>SHINSEI ELECTRONICS</Authors>

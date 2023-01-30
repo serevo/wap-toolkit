@@ -1,0 +1,48 @@
+name: Nuget Push to GitHub Packages at Pull-request
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: ['main']
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+
+    steps:    
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: .NET Restore
+        working-directory: ./src
+        run: |
+          dotnet restore
+        
+      - name: .NET Build
+        working-directory: ./src/Serevo.WapToolkit
+        run: |
+          dotnet build --configuration Release --no-restore
+
+      - name: Set Pull-request number to GITHUB_ENV
+        run : 
+            echo "pr_number=$(echo $GITHUB_REF | sed -e 's/[^0-9]//g')" >> $GITHUB_ENV
+
+      - name: .NET Pack
+        working-directory: ./src/Serevo.WapToolkit
+        run: |
+          dotnet pack --configuration Release --version-suffix pr.${{ env.pr_number }}.${{ github.run_number }}
+
+      - name: Set GitHub Packages source to nuget.config
+        run: dotnet nuget add source --name github "https://nuget.pkg.github.com/serevo/index.json"
+      
+      - name: Nuget Push to GitHub Packages
+        working-directory: ./src/Serevo.WapToolkit/bin/Release
+        run: dotnet nuget push --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} *.nupkg

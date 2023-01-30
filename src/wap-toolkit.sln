@@ -9,12 +9,20 @@ Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "DemoPackage", "DemoPackage\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoWinFormsApp", "DemoWinFormsApp\DemoWinFormsApp.csproj", "{73BEC6A3-3D3F-460C-AEB0-A75EE156C255}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{108302FB-4FB0-40CF-99D3-C1563FD0ADA4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{108302FB-4FB0-40CF-99D3-C1563FD0ADA4}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
 		self-signed-code-signing.pfx = self-signed-code-signing.pfx
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSettingsClassLib", "DemoSettingsClassLib\DemoSettingsClassLib.csproj", "{3D02D1A7-627A-4DE3-95EA-3196106FAA88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{8A9D46F3-C8FC-4D90-8F32-AB88FA04D4B4}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\nuget-push-at-pull-request.yml = ..\.github\workflows\nuget-push-at-pull-request.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
