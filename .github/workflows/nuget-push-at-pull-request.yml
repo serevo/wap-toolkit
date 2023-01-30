@@ -22,7 +22,7 @@ jobs:
           dotnet-version: '5.0.x'
 
       - name: .NET Restore
-        working-directory: ./src
+        working-directory: ./src/Serevo.WapToolkit
         run: |
           dotnet restore
         
