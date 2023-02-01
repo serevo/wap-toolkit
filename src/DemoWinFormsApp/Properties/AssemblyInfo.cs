@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DemoWinFormsApp")]
+[assembly: AssemblyCompany("My Compnay")]
+[assembly: AssemblyTitle("My Title")]
+[assembly: AssemblyProduct("My Product")]
 [assembly: ComVisible(false)]
 [assembly: Guid("73bec6a3-3d3f-460c-aeb0-a75ee156c255")]
 [assembly: AssemblyVersion("2.0.0.0")]
