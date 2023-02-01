@@ -12,7 +12,7 @@
     <Description>WAP Toolkit: This is the toolkit for Windows Application Package (MSIX). This package is versioned according to SemVer (Semantic Versioning) 2.0.0</Description>
     <Copyright>© 2023 SHINSEI ELECTRONICS CO,.LTD.</Copyright>
     <PackageProjectUrl>https://github.com/serevo/wap-toolkit</PackageProjectUrl>
-    <PackageTags>WAP;MSIX;Bridge;SettingsProvider;Settings;SettingsBase</PackageTags>
+    <PackageTags>WAP;MSIX;Bridge;SettingsProvider;Settings;SettingsBase;ConfigurationManager</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
