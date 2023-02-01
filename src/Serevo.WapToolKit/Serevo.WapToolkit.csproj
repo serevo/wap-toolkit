@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>strong-name-key.snk</AssemblyOriginatorKeyFile>
     <RepositoryUrl>https://github.com/serevo/storex-sdk</RepositoryUrl>
     <Title>WAP Toolkit</Title>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Shinsei Electronics</Authors>
     <Description>WAP Toolkit: This is the toolkit for Windows Application Package (MSIX). This package is versioned according to SemVer (Semantic Versioning) 2.0.0</Description>
     <Copyright>© 2023 SHINSEI ELECTRONICS CO,.LTD.</Copyright>
