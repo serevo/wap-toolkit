@@ -38,7 +38,30 @@ namespace Serevo.WapToolkit
         public override void Initialize(string name, NameValueCollection config)
             => base.Initialize(nameof(WapDataContainerSettingsProvider), config);
 
-        string CreateKey(SettingsContext context)
+        /// <summary>
+        /// Please see <see cref="SettingsProvider.GetPropertyValues"/>.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public override SettingsPropertyValueCollection GetPropertyValues(SettingsContext context, SettingsPropertyCollection collection)
+        {
+            return GetPropertyValuesInner(context, collection);
+        }
+
+        /// <summary>
+        /// Please see  <see cref="SettingsProvider.SetPropertyValues"/>.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="collection"></param>
+        /// <exception cref="NotSupportedException"></exception>
+        public override void SetPropertyValues(SettingsContext context, SettingsPropertyValueCollection collection)
+        {
+            SetPropertyValuesInner(context, collection);
+        }
+
+        static string CreateKey(SettingsContext context)
         {
             DumpContext(context);
 
@@ -51,7 +74,7 @@ namespace Serevo.WapToolkit
         }
 
         [Conditional("DEBUG")]
-        void DumpContext(SettingsContext context)
+        static void DumpContext(SettingsContext context)
         {
             foreach(var key in context.Keys)
             {
@@ -59,7 +82,7 @@ namespace Serevo.WapToolkit
             }
         }
 
-        bool IsUserSetting(SettingsProperty setting)
+        static bool IsUserSetting(SettingsProperty setting)
         {
             var user = setting.Attributes.Contains(typeof(UserScopedSettingAttribute));
 
@@ -76,14 +99,7 @@ namespace Serevo.WapToolkit
             return user;
         }
 
-        /// <summary>
-        /// Please see <see cref="SettingsProvider.GetPropertyValues"/>.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
-        public override SettingsPropertyValueCollection GetPropertyValues(SettingsContext context, SettingsPropertyCollection collection)
+        internal static SettingsPropertyValueCollection GetPropertyValuesInner(SettingsContext context, SettingsPropertyCollection collection)
         {
             var results = new SettingsPropertyValueCollection();
 
@@ -92,7 +108,7 @@ namespace Serevo.WapToolkit
             var roamingContainer = ApplicationData.Current.RoamingSettings.CreateContainer(key, ApplicationDataCreateDisposition.Always);
 
             var localContainer = ApplicationData.Current.LocalSettings.CreateContainer(key, ApplicationDataCreateDisposition.Always);
-            
+
             foreach (SettingsProperty prop in collection)
             {
                 var propValue = new SettingsPropertyValue(prop);
@@ -135,13 +151,7 @@ namespace Serevo.WapToolkit
             return results;
         }
 
-        /// <summary>
-        /// Please see  <see cref="SettingsProvider.SetPropertyValues"/>.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="collection"></param>
-        /// <exception cref="NotSupportedException"></exception>
-        public override void SetPropertyValues(SettingsContext context, SettingsPropertyValueCollection collection)
+        internal static void SetPropertyValuesInner(SettingsContext context, SettingsPropertyValueCollection collection)
         {
             var key = CreateKey(context);
 
