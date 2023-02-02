@@ -1,13 +1,8 @@
-﻿using System.Configuration;
-
+﻿
 namespace DemoWinFormsApp.Properties
 {
-
-    [SettingsProvider(typeof(Serevo.WapToolkit.WapDataContainerSettingsProvider))]
-    internal sealed partial class Settings
+    [System.Configuration.SettingsProvider(typeof(Serevo.WapToolkit.WapDataContainerSettingsProvider))]
+    partial class Settings
     {
-        public Settings()
-        {
-        }
     }
 }
