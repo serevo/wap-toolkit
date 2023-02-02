@@ -13,20 +13,6 @@ namespace DemoWinFormsApp
             InitializeComponent();
         }
 
-        bool HasPackage()
-        {
-            try
-            {
-                _ = Windows.Storage.ApplicationData.Current;
-
-                return true;
-            }
-            catch (InvalidOperationException)
-            {
-                return false;
-            }
-        }
-
         void Form1_Load(object sender, EventArgs e)
         {
             textBox1.Text = $@"
@@ -40,23 +26,19 @@ namespace DemoWinFormsApp
 {"Environment.SpecialFolder.LocalApplicationData)"}: {Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}
 ";
 
-            var hasPackage = HasPackage();
+            textBox3.Text = AppInfoHelper.HasPackage ? Windows.Storage.ApplicationData.Current.LocalFolder.Path : null;
+            textBox4.Text = AppInfoHelper.HasPackage ? Windows.Storage.ApplicationData.Current.RoamingFolder.Path : null;
+            textBox5.Text = AppInfoHelper.HasPackage ? Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path : null;
 
-            textBox3.Text = hasPackage ? Windows.Storage.ApplicationData.Current.LocalFolder.Path : null;
-            textBox4.Text = hasPackage ? Windows.Storage.ApplicationData.Current.RoamingFolder.Path : null;
-            textBox5.Text = hasPackage ? Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path : null;
+            button3.Enabled = AppInfoHelper.HasPackage;
+            button4.Enabled = AppInfoHelper.HasPackage;
+            button5.Enabled = AppInfoHelper.HasPackage;
 
-            button3.Enabled = hasPackage;
-            button4.Enabled = hasPackage;
-            button5.Enabled = hasPackage;
-
-            checkBox1.Enabled = hasPackage;
-            checkBox1.Checked = hasPackage ? Settings.Default.BooleanValue : checkBox1.Checked;
+            checkBox1.Checked = Settings.Default.BooleanValue;
             checkBox2.Checked = Settings2.Default.BooleanValue2;
 
-            numericUpDown1.Enabled = hasPackage;
-            numericUpDown1.Value = hasPackage ? DemoSettingsClassLib.SettingsService.Int32Value : numericUpDown1.Value;
-            numericUpDown2.Value = DemoSettingsClassLib.SettingsService.Int32Value2;
+            numericUpDown1.Value = DemoSettingsClassLib.Properties.Settings.Default.Int32Value;
+            numericUpDown2.Value = DemoSettingsClassLib.Properties.Settings2.Default.Int32Value2;
         }
 
         void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -121,13 +103,14 @@ namespace DemoWinFormsApp
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            DemoSettingsClassLib.SettingsService.Int32Value = (int)numericUpDown1.Value;
-
+            DemoSettingsClassLib.Properties.Settings.Default.Int32Value = (int)numericUpDown1.Value;
+            DemoSettingsClassLib.Properties.Settings.Default.Save();
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-           DemoSettingsClassLib.SettingsService.Int32Value2 = (int)numericUpDown2.Value;
+            DemoSettingsClassLib.Properties.Settings2.Default.Int32Value2 = (int)numericUpDown2.Value;
+            DemoSettingsClassLib.Properties.Settings2.Default.Save();
         }
     }
 }
