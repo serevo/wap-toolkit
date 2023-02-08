@@ -16,7 +16,7 @@
 
 ## 設定プロバイダー
 
-冒頭ドキュメントに記載の通り、アプリの設定でよく使用されてきた AppData フォルダ への書込みは別の専用の場所にリダイレクトされキャッシュ扱いとなります。またディレクトリ構造も異なる為  [Upgrade](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.applicationsettingsbase.upgrade) メソッドによる異なるバージョン間の設定値の引継ぎは機能しなくなります。
+冒頭ドキュメントに記載の通り、アプリの設定でよく使用されてきた AppData フォルダ への書込みは別の専用の場所にリダイレクトされます。これはキャッシュ扱いとなり、アプリのバージョンアップ時に失われます。またディレクトリ構造も異なる為  [Upgrade](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.applicationsettingsbase.upgrade) メソッドによる異なるバージョン間の設定値の引継ぎは機能しなくなります。
 
 
 
