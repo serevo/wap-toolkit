@@ -1,6 +1,6 @@
 # WAP (MSIX) Toolkit
 
-[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Serevo.WapToolkit)](https://www.nuget.org/packages/Storex.Core) 
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Serevo.WapToolkit)](https://www.nuget.org/packages/Serevo.WapToolkit) 
 
 
 
