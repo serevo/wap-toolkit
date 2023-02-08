@@ -16,13 +16,13 @@
 
 ## 設定プロバイダー
 
-冒頭ドキュメントに記載の通り、アプリの設定でよく使用されてきた AppData フォルダ への書込みは別の専用の場所にリダイレクトされます。これはキャッシュ扱いとなり、アプリのバージョンアップ時に失われます。またディレクトリ構造も異なる為  [Upgrade](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.applicationsettingsbase.upgrade) メソッドによる異なるバージョン間の設定値の引継ぎは機能しなくなります。
+冒頭ドキュメントに記載の通り、アプリの設定でよく使用されてきた AppData フォルダ への書込みは別の専用の場所にリダイレクトされ、キャッシュ扱いとなります。そして [従来のアプリケーション設定](https://learn.microsoft.com/ja-jp/dotnet/desktop/winforms/advanced/application-settings-for-windows-forms) による方法ではアプリのバージョンアップ時に設定値が失われてしまいます。 [Upgrade](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.applicationsettingsbase.upgrade) メソッドによる異なるバージョン間の設定値の引継ぎもディレクトリ構造が異なる為機能しなくなります。
 
 
 
 ### WapDataContainerSettingsProvider
 
-このクラスは [従来のアプリケーション設定](https://learn.microsoft.com/ja-jp/dotnet/desktop/winforms/advanced/application-settings-for-windows-forms) の書込み先として [パッケージ化されたアプリケーション用の設定](https://learn.microsoft.com/ja-jp/windows/apps/design/app-settings/store-and-retrieve-app-data) のストレージを使用する [SettingsProvider](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.settingsprovider) です。また  **WapDataContainerLocalFileHybridSettingsProvider** クラスは内部でパッケージ化されているかどうかを検出し、パッケージ化されていなければ従来の [LocalFileSettingsProvider](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.localfilesettingsprovider) として機能するハイブリッド プロバイダです。
+このクラスは [従来のアプリケーション設定](https://learn.microsoft.com/ja-jp/dotnet/desktop/winforms/advanced/application-settings-for-windows-forms) の書込み先として [パッケージ化されたアプリケーション設定](https://learn.microsoft.com/ja-jp/windows/apps/design/app-settings/store-and-retrieve-app-data) のストレージを使用する [SettingsProvider](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.settingsprovider) です。また  **WapDataContainerLocalFileHybridSettingsProvider** クラスは内部でパッケージ化されているかどうかを検出し、パッケージ化されていなければ従来の [LocalFileSettingsProvider](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.localfilesettingsprovider) として機能するハイブリッド プロバイダです。
 
 
 
