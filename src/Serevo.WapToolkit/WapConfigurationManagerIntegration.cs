@@ -8,19 +8,21 @@ namespace Serevo.WapToolkit
 {
     static class WapConfigurationManagerIntegration
     {
-        public static void UpgradeUserConfiguration(ConfigurationUserLevel userLevel)
+        public static void UpgradeExeConfiguration(ConfigurationUserLevel userLevel)
         {
             if (!PackageHelper.HasPackage) return;
 
-            var originalRoot = new DirectoryInfo(GetUserConfigurationUrlRoot(userLevel));
+            var originalUrlRoot = new DirectoryInfo(GetExeConfigurationUrlRoot(userLevel));
 
-            if (originalRoot.Exists) return;
+            if (originalUrlRoot.Exists) return;
 
-            if (!originalRoot.Parent.Exists) return;
+            if (!originalUrlRoot.Parent.Exists) return;
 
-            var oldRoot = originalRoot.Parent
-                .EnumerateDirectories()
-                .OrderByDescending(o=> o
+            var prefix = originalUrlRoot.Name.Substring(0, originalUrlRoot.Name.LastIndexOf("_Url_"));
+
+            var previousUrlRoot = originalUrlRoot.Parent
+                .EnumerateDirectories($"{prefix}_url_*", SearchOption.TopDirectoryOnly)
+                .OrderByDescending(o => o
                     .EnumerateFiles("*", SearchOption.AllDirectories)
                     .Select(oo => oo.LastWriteTime)
                     .OrderBy(v => v)
@@ -28,23 +30,23 @@ namespace Serevo.WapToolkit
                     )
                 .FirstOrDefault();
 
-            if (oldRoot is null) return;
+            if (previousUrlRoot is null) return;
 
-            var oldFiles = oldRoot.GetFiles("*", SearchOption.AllDirectories);
+            var files = previousUrlRoot.GetFiles("*", SearchOption.AllDirectories);
 
-            foreach(var oldFile in oldFiles)
+            foreach (var file in files)
             {
-                var oldFileRelativePath = GetRelativePath(oldRoot.FullName, oldFile.FullName);
+                var fileRelativePath = GetRelativePath(previousUrlRoot.FullName, file.FullName);
 
-                var newFile = new FileInfo(Path.Combine(originalRoot.FullName, oldFileRelativePath));
+                var newFile = new FileInfo(Path.Combine(originalUrlRoot.FullName, fileRelativePath));
 
                 newFile.Directory.Create();
 
-                oldFile.CopyTo(newFile.FullName);
+                file.CopyTo(newFile.FullName);
             }
         }
 
-        public static string GetUserConfigurationUrlRoot(ConfigurationUserLevel userLevel)
+        public static string GetExeConfigurationUrlRoot(ConfigurationUserLevel userLevel)
         {
             var userConfig = ConfigurationManager.OpenExeConfiguration(userLevel).FilePath;
 
@@ -55,11 +57,11 @@ namespace Serevo.WapToolkit
             return urlPrefixedRootFolder;
         }
 
-        public static string GetRedirectedUserConfigurationUrlRoot(ConfigurationUserLevel userLevel)
+        public static string GetRedirectedExeConfigurationUrlRoot(ConfigurationUserLevel userLevel)
         {
             if (!PackageHelper.HasPackage) return null;
 
-            var original = GetUserConfigurationUrlRoot(userLevel);
+            var original = GetExeConfigurationUrlRoot(userLevel);
 
             var appDataLocalFolder = Path.GetDirectoryName(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
 
