@@ -11,17 +11,6 @@ namespace Serevo.WapToolkit
     /// </summary>
     public static class WapConfigurationManagerIntegration
     {
-        const string _myLocalSettingsContainerKey = "e3953958-4b7c-4686-96e8-daacc0e358b1";
-
-        static ApplicationDataContainer MyLocalSettingsContainer => ApplicationData.Current
-            .LocalSettings.CreateContainer(_myLocalSettingsContainerKey, ApplicationDataCreateDisposition.Always);
-
-        static string GetLatestUrlRoot(ConfigurationUserLevel userLevel) => MyLocalSettingsContainer
-            .Values[userLevel.ToString()] as string;
-
-        static void SetLatestUrlRoot(ConfigurationUserLevel userLevel, string path) => MyLocalSettingsContainer
-            .Values[userLevel.ToString()] = path;
-
         static string GetRelativePath(string relativeTo, string path)
         {
             // Only .NET Core 2.0 +
@@ -40,53 +29,34 @@ namespace Serevo.WapToolkit
 
             var urlRoot = new DirectoryInfo(GetExeConfigurationUrlRoot(userLevel));
 
-            if (!urlRoot.Exists)
+            if (urlRoot.Exists) return;
+
+            if (!urlRoot.Parent.Exists) return;
+
+            var prefix = urlRoot.Name.Substring(0, urlRoot.Name.LastIndexOf("_Url_"));
+
+            var latestUrlRoot = urlRoot.Parent
+                .EnumerateDirectories($"{prefix}_url_*", SearchOption.TopDirectoryOnly)
+                .OrderByDescending(o => o
+                    .EnumerateFiles("*", SearchOption.AllDirectories)
+                    .Select(oo => oo.LastWriteTime)
+                    .OrderBy(v => v)
+                    .LastOrDefault()
+                    )
+                .FirstOrDefault();
+
+            var files = latestUrlRoot.GetFiles("*", SearchOption.AllDirectories);
+
+            foreach (var file in files)
             {
-                DirectoryInfo latestUrlRoot;
+                var fileRelativePath = GetRelativePath(latestUrlRoot.FullName, file.FullName);
 
-                var latestUrlRootPath = GetLatestUrlRoot(userLevel);
+                var newFile = new FileInfo(Path.Combine(urlRoot.FullName, fileRelativePath));
 
-                if (latestUrlRootPath != null)
-                {
-                    latestUrlRoot = new DirectoryInfo(latestUrlRootPath);
-                }
-                else if (urlRoot.Parent.Exists)
-                {
-                    var prefix = urlRoot.Name.Substring(0, urlRoot.Name.LastIndexOf("_Url_"));
+                newFile.Directory.Create();
 
-                    latestUrlRoot = urlRoot.Parent
-                        .EnumerateDirectories($"{prefix}_url_*", SearchOption.TopDirectoryOnly)
-                        .OrderByDescending(o => o
-                            .EnumerateFiles("*", SearchOption.AllDirectories)
-                            .Select(oo => oo.LastWriteTime)
-                            .OrderBy(v => v)
-                            .LastOrDefault()
-                            )
-                        .FirstOrDefault();
-                }
-                else
-                {
-                    latestUrlRoot = null;
-                }
-
-                if (latestUrlRoot?.Exists == true)
-                {
-                    var files = latestUrlRoot.GetFiles("*", SearchOption.AllDirectories);
-
-                    foreach (var file in files)
-                    {
-                        var fileRelativePath = GetRelativePath(latestUrlRoot.FullName, file.FullName);
-
-                        var newFile = new FileInfo(Path.Combine(urlRoot.FullName, fileRelativePath));
-
-                        newFile.Directory.Create();
-
-                        file.CopyTo(newFile.FullName);
-                    }
-                }
+                file.CopyTo(newFile.FullName);
             }
-
-            SetLatestUrlRoot(userLevel, urlRoot.FullName);
         }
 
         /// <summary>

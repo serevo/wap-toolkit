@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -42,18 +43,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Properties\AppSettings.Designer.cs">
+    <Compile Include="Properties\AppSettings2.cs" />
+    <Compile Include="Properties\AppSettings2.Designer.cs">
+      <DependentUpon>AppSettings2.settings</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>AppSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AppSettings1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>AppSettings1.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Properties\AppSettings.settings">
+    <None Include="Properties\AppSettings2.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+      <LastGenOutput>AppSettings2.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\AppSettings1.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>AppSettings1.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

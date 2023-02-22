@@ -2,9 +2,13 @@
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using Serevo.WapToolkit;
-using AppSettings1 = TestConsoleApp.Properties.AppSettings;
+using AppSettings1 = TestConsoleApp.Properties.AppSettings1;
+using AppSettings2 = TestConsoleApp.Properties.AppSettings2;
 using LibSettings1 = TestSettingsLib.Properties.LibSettings1;
+using LibSettings2 = TestSettingsLib.Properties.LibSettings2;
 
 namespace TestConsoleApp
 {
@@ -12,52 +16,94 @@ namespace TestConsoleApp
     {
         static void Main()
         {
+            Console.WriteLine(Assembly.GetExecutingAssembly().GetName().FullName);
+            Console.WriteLine(typeof(LibSettings1).Assembly.GetName().FullName);
+
             while (true)
             {
-                Console.Write("Input command (h: Help) > ");
+                Console.WriteLine();
+                Console.Write("Input command > ");
 
                 switch (Console.ReadLine().ToLower())
                 {
-                    case "h":
-
-                        Console.WriteLine("s: Display Local Configuration Url Root Folder exists status");
-                        Console.WriteLine("s-o: Display Other Config Path");
-
-                        Console.WriteLine("o: Open AppCenter Config File location");
-
-                        Console.WriteLine("u: Move AppCenter Config File previous version to new version's location");
-
-                        Console.WriteLine();
-
-                        continue;
-
-                    case "m":
-
-                        WapConfigurationManagerIntegration.MigrateExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
-
-                        continue;
-
-                    case "ml":
-
-                        TestSettingsLib.LibUtil.CallWapConfigManMigrate(ConfigurationUserLevel.PerUserRoamingAndLocal);
-
-                        continue;
-
-                    case "values":
-
-                        Console.WriteLine($"AppSettings1.Value: {AppSettings1.Default.Value}");
-                        Console.WriteLine($"LibSettings1.Value: {LibSettings1.Default.Value}");
-                        Console.WriteLine();
-                        continue;
-
                     case "exists":
+                    case "e":
+                        {
+                            var userLevel = ChooseUserLevel();
 
-                        string existsString(bool exists) => exists ? "Exists" : "Not Exists";
-                        var local = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(ConfigurationUserLevel.PerUserRoamingAndLocal);
-                        var roaming = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(ConfigurationUserLevel.PerUserRoaming);
-                        Console.WriteLine($"Local: {local}: {existsString(Directory.Exists(local))}");
-                        Console.WriteLine($"Roaming: {roaming}: {existsString(Directory.Exists(roaming))}");
-                        Console.WriteLine();
+                            if (userLevel != ConfigurationUserLevel.None)
+                            {
+                                var path = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(userLevel);
+
+                                Console.WriteLine($"({(Directory.Exists(path) ? "Exists" : "Not Exists")}) {path}");
+                            }
+
+                            continue;
+                        }
+
+                    case "open":
+                    case "o":
+                        {
+                            var userLevel = ChooseUserLevel();
+
+                            var original = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(userLevel);
+
+                            Console.WriteLine($"original: {original}");
+
+                            Process.Start("EXPLORER.EXE", $@"/select,""{original}""");
+
+                            var redirected = WapConfigurationManagerIntegration.GetRedirectedExeConfigurationUrlRoot(userLevel);
+
+                            if (redirected != null)
+                            {
+                                Console.WriteLine($"redirected: {redirected}");
+
+                                Process.Start("EXPLORER.EXE", $@"/select,""{redirected}""");
+                            }
+
+                            continue;
+                        }
+
+                    case "migrate":
+                        {
+                            var userLevel = ChooseUserLevel();
+
+                            if (userLevel != ConfigurationUserLevel.None)
+                            {
+                                WapConfigurationManagerIntegration.MigrateExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                            }
+
+                            continue;
+                        }
+
+                    case "value":
+                    case "val":
+                    case "v":
+
+                        ChooseSettings().Cast<dynamic>().ToList().ForEach(o => Console.WriteLine($"{o.GetType().Name}: {o.Value}"));
+                        continue;
+
+                    case "increment":
+                    case "inc":
+                    case "i":
+
+                        ChooseSettings().Cast<dynamic>().ToList().ForEach(o => o.Value++);
+                        continue;
+
+                    case "save":
+                    case "s":
+
+                        ChooseSettings().ToList().ForEach(o => o.Save());
+                        continue;
+
+                    case "upgrade":
+
+                        ChooseSettings().ToList().ForEach(o => o.Upgrade());
+                        continue;
+
+                    case "reload":
+
+                        ChooseSettings().ToList().ForEach(o => o.Reload());
                         continue;
 
                     case "others":
@@ -69,73 +115,41 @@ namespace TestConsoleApp
                         Console.WriteLine("Environment.SpecialFolder.CommonApplicationData: " + Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData));
                         continue;
 
-                    case "open":
-
-                        var original = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(ConfigurationUserLevel.PerUserRoamingAndLocal);
-
-                        Console.WriteLine($"original: {original}");
-
-                        Process.Start("EXPLORER.EXE", $@"/select,""{original}""");
-
-                        var redirected = WapConfigurationManagerIntegration.GetRedirectedExeConfigurationUrlRoot(ConfigurationUserLevel.PerUserRoamingAndLocal);
-
-                        if (redirected != null)
-                        {
-                            Console.WriteLine($"redirected: {redirected}");
-
-                            Process.Start("EXPLORER.EXE", $@"/select,""{redirected}""");
-                        }
-
-                        continue;
-
-                    case "i1":
-
-                        AppSettings1.Default.Value++;
-                        AppSettings1.Default.Save();
-
-                        continue;
-
-                    case "il1":
-
-                        LibSettings1.Default.Value++;
-                        LibSettings1.Default.Save();
-
-                        continue;
-
-                    case "u1":
-
-                        AppSettings1.Default.Upgrade();
-                        AppSettings1.Default.Save();
-
-                        continue;
-
-                    case "ul1":
-
-                        LibSettings1.Default.Upgrade();
-                        LibSettings1.Default.Save();
-
-                        continue;
-
-                    case "r1":
-
-                        AppSettings1.Default.Reload();
-
-                        continue;
-
-                    case "rl1":
-
-                        LibSettings1.Default.Reload();
-
-                        continue;
-
                     default:
 
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Invalid command.");
                         Console.ResetColor();
-
                         continue;
                 }
+            }
+        }
+
+        static ApplicationSettingsBase[] ChooseSettings()
+        {
+            Console.Write("Choose Container (A1 / L1). If empty then all. If other keys then to cancel.");
+
+            switch (Console.ReadLine().ToUpper())
+            {
+                case "": return new ApplicationSettingsBase[] { AppSettings1.Default, AppSettings2.Default, LibSettings1.Default, LibSettings2.Default };
+                case "A1": return new[] { AppSettings1.Default };
+                case "A2": return new[] { AppSettings2.Default };
+                case "L1": return new[] { LibSettings1.Default };
+                case "L2": return new[] { LibSettings2.Default };
+                default: return Array.Empty<ApplicationSettingsBase>();
+            }
+        }
+
+        static ConfigurationUserLevel ChooseUserLevel()
+        {
+            Console.Write("Choose UserLevel (L:Local / R:Roaming). If empty then L. If other keys then to cancel.");
+
+            switch (Console.ReadLine().ToUpper())
+            {
+                case "": return ConfigurationUserLevel.PerUserRoamingAndLocal;
+                case "L": return ConfigurationUserLevel.PerUserRoamingAndLocal;
+                case "R": return ConfigurationUserLevel.PerUserRoaming;
+                default: return  ConfigurationUserLevel.None;
             }
         }
     }

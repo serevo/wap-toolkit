@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DemoWinFormsApp.Properties {
+namespace TestSettingsLib.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class LibSettings2 : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static LibSettings2 defaultInstance = ((LibSettings2)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new LibSettings2())));
         
-        public static Settings Default {
+        public static LibSettings2 Default {
             get {
                 return defaultInstance;
             }
@@ -25,13 +25,13 @@ namespace DemoWinFormsApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool BooleanValue {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Value {
             get {
-                return ((bool)(this["BooleanValue"]));
+                return ((int)(this["Value"]));
             }
             set {
-                this["BooleanValue"] = value;
+                this["Value"] = value;
             }
         }
     }
