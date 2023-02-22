@@ -14,9 +14,14 @@ namespace Serevo.WapToolkit
         /// <summary>
         /// Move configuration files of executable (.exe) managed by ConfigurationManager to new location. Call this method before calling any configuration members.
         /// </summary>
-        /// <param name="userLevel"></param>
+        /// <param name="userLevel">Specify PerUserRoaming or PerUserRoamingAndLocal.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static void MigrateUnsignedExeConfiguration(ConfigurationUserLevel userLevel)
         {
+            if (userLevel != ConfigurationUserLevel.PerUserRoaming & 
+                userLevel != ConfigurationUserLevel.PerUserRoamingAndLocal)
+                throw new ArgumentOutOfRangeException(nameof(userLevel));
+
             if (!PackageHelper.HasPackage) return;
 
             var urlRoot = new DirectoryInfo(GetExeConfigurationUrlRoot(userLevel));
