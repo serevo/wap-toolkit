@@ -1,6 +1,8 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using Windows.Storage;
 
 namespace Serevo.WapToolkit
 {
@@ -17,7 +19,7 @@ namespace Serevo.WapToolkit
         {
             if (!PackageHelper.HasPackage) return;
 
-            var urlRoot = new DirectoryInfo(WapConfigurationManagerHelper.GetExeConfigurationUrlRoot(userLevel));
+            var urlRoot = new DirectoryInfo(GetExeConfigurationUrlRoot(userLevel));
 
             if (urlRoot.Exists) return;
 
@@ -39,7 +41,7 @@ namespace Serevo.WapToolkit
 
             foreach (var file in files)
             {
-                var fileRelativePath = WapConfigurationManagerHelper.GetRelativePath(latestUrlRoot.FullName, file.FullName);
+                var fileRelativePath = GetRelativePath(latestUrlRoot.FullName, file.FullName);
 
                 var newFile = new FileInfo(Path.Combine(urlRoot.FullName, fileRelativePath));
 
@@ -47,6 +49,40 @@ namespace Serevo.WapToolkit
 
                 file.CopyTo(newFile.FullName);
             }
+        }
+
+        internal static string GetExeConfigurationUrlRoot(ConfigurationUserLevel userLevel)
+        {
+            var userConfig = ConfigurationManager.OpenExeConfiguration(userLevel).FilePath;
+
+            var versionNumberFolder = Path.GetDirectoryName(userConfig);
+
+            var urlPrefixedRootFolder = Path.GetDirectoryName(versionNumberFolder);
+
+            return urlPrefixedRootFolder;
+        }
+
+        internal static string GetExeConfigurationUrlRootRedirected(ConfigurationUserLevel userLevel)
+        {
+            if (!PackageHelper.HasPackage) return null;
+
+            var original = GetExeConfigurationUrlRoot(userLevel);
+
+            var appDataLocalFolder = Path.GetDirectoryName(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
+
+            var relative = GetRelativePath(appDataLocalFolder, original);
+
+            var redirected = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, relative);
+
+            return redirected;
+        }
+
+        static string GetRelativePath(string relativeTo, string path)
+        {
+            // Only .NET Core 2.0 +
+            // return Path.GetRelativePath(appDataPath, originalPath);
+
+            return new Uri(relativeTo + "\\").MakeRelativeUri(new Uri(path)).ToString().Replace("/", "\\");
         }
     }
 }

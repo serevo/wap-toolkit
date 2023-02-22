@@ -26,8 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSettingsLib", "TestSett
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{32393BB7-EFBD-4124-8F96-B0B54E205D91}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{5BDA2820-6EC6-4BE2-A36A-CFBBC7B1F2BF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,10 +141,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D00B44D-EB76-4557-97DC-0BCB5E9CB23B}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Shared\Shared.projitems*{5bda2820-6ec6-4be2-a36a-cfbbc7b1f2bf}*SharedItemsImports = 13
-		Shared\Shared.projitems*{727d0f1e-1313-44fa-ba3a-586ed9b211a2}*SharedItemsImports = 4
-		Shared\Shared.projitems*{e79e5669-318c-42eb-b045-2e3f1591fc88}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
