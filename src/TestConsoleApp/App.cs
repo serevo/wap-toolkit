@@ -31,12 +31,9 @@ namespace TestConsoleApp
                         {
                             var userLevel = ChooseUserLevel();
 
-                            if (userLevel != ConfigurationUserLevel.None)
-                            {
-                                var path = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(userLevel);
+                            var path = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(userLevel);
 
-                                Console.WriteLine($"({(Directory.Exists(path) ? "Exists" : "Not Exists")}) {path}");
-                            }
+                            Console.WriteLine($"({(Directory.Exists(path) ? "Exists" : "Not Exists")}) {path}");
 
                             continue;
                         }
@@ -68,10 +65,7 @@ namespace TestConsoleApp
                         {
                             var userLevel = ChooseUserLevel();
 
-                            if (userLevel != ConfigurationUserLevel.None)
-                            {
-                                WapConfigurationManagerIntegration.MigrateUnsignedExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
-                            }
+                            WapConfigurationManagerIntegration.MigrateUnsignedExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
 
                             continue;
                         }
@@ -127,7 +121,7 @@ namespace TestConsoleApp
 
         static ApplicationSettingsBase[] ChooseSettings()
         {
-            Console.Write("Choose Container (A1 / L1). If empty then all. If other keys then to cancel.");
+            Console.Write("Choose Container (A1 / L1). If empty then all. If other keys then to cancel. >");
 
             switch (Console.ReadLine().ToUpper())
             {
@@ -142,11 +136,12 @@ namespace TestConsoleApp
 
         static ConfigurationUserLevel ChooseUserLevel()
         {
-            Console.Write("Choose UserLevel (L:Local / R:Roaming). If empty then L. If other keys then to cancel.");
+            Console.Write("Choose UserLevel (L:Local / R:Roaming / N:None). If empty then L. If other keys then to cancel. >");
 
             switch (Console.ReadLine().ToUpper())
             {
                 case "": return ConfigurationUserLevel.PerUserRoamingAndLocal;
+                case "N": return ConfigurationUserLevel.None;
                 case "L": return ConfigurationUserLevel.PerUserRoamingAndLocal;
                 case "R": return ConfigurationUserLevel.PerUserRoaming;
                 default: return  ConfigurationUserLevel.None;
