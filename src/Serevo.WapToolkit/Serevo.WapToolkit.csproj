@@ -21,4 +21,6 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
 
+  <Import Project="..\Shared\Shared.projitems" Label="Shared" />
+
 </Project>

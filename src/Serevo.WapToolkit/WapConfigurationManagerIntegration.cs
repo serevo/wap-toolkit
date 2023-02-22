@@ -1,33 +1,23 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Linq;
-using Windows.Storage;
 
 namespace Serevo.WapToolkit
 {
     /// <summary>
-    /// 
+    /// Support <see cref="ConfigurationManager"/> Integration.
     /// </summary>
     public static class WapConfigurationManagerIntegration
     {
-        static string GetRelativePath(string relativeTo, string path)
-        {
-            // Only .NET Core 2.0 +
-            // return Path.GetRelativePath(appDataPath, originalPath);
-
-            return new Uri(relativeTo + "\\").MakeRelativeUri(new Uri(path)).ToString().Replace("/", "\\");
-        }
-
         /// <summary>
-        /// 
+        /// Move configuration files of executable (.exe) managed by ConfigurationManager to new location. Call this method before calling any configuration members.
         /// </summary>
         /// <param name="userLevel"></param>
         public static void MigrateExeConfiguration(ConfigurationUserLevel userLevel)
         {
             if (!PackageHelper.HasPackage) return;
 
-            var urlRoot = new DirectoryInfo(GetExeConfigurationUrlRoot(userLevel));
+            var urlRoot = new DirectoryInfo(WapConfigurationManagerHelper.GetExeConfigurationUrlRoot(userLevel));
 
             if (urlRoot.Exists) return;
 
@@ -49,7 +39,7 @@ namespace Serevo.WapToolkit
 
             foreach (var file in files)
             {
-                var fileRelativePath = GetRelativePath(latestUrlRoot.FullName, file.FullName);
+                var fileRelativePath = WapConfigurationManagerHelper.GetRelativePath(latestUrlRoot.FullName, file.FullName);
 
                 var newFile = new FileInfo(Path.Combine(urlRoot.FullName, fileRelativePath));
 
@@ -57,42 +47,6 @@ namespace Serevo.WapToolkit
 
                 file.CopyTo(newFile.FullName);
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userLevel"></param>
-        /// <returns></returns>
-        public static string GetExeConfigurationUrlRoot(ConfigurationUserLevel userLevel)
-        {
-            var userConfig = ConfigurationManager.OpenExeConfiguration(userLevel).FilePath;
-
-            var versionNumberFolder = Path.GetDirectoryName(userConfig);
-
-            var urlPrefixedRootFolder = Path.GetDirectoryName(versionNumberFolder);
-
-            return urlPrefixedRootFolder;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userLevel"></param>
-        /// <returns></returns>
-        public static string GetRedirectedExeConfigurationUrlRoot(ConfigurationUserLevel userLevel)
-        {
-            if (!PackageHelper.HasPackage) return null;
-
-            var original = GetExeConfigurationUrlRoot(userLevel);
-
-            var appDataLocalFolder = Path.GetDirectoryName(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
-
-            var relative = GetRelativePath(appDataLocalFolder, original);
-
-            var redirected = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, relative);
-
-            return redirected;
         }
     }
 }

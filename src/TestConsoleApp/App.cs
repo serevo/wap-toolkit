@@ -33,7 +33,7 @@ namespace TestConsoleApp
 
                             if (userLevel != ConfigurationUserLevel.None)
                             {
-                                var path = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(userLevel);
+                                var path = WapConfigurationManagerHelper.GetExeConfigurationUrlRoot(userLevel);
 
                                 Console.WriteLine($"({(Directory.Exists(path) ? "Exists" : "Not Exists")}) {path}");
                             }
@@ -46,13 +46,13 @@ namespace TestConsoleApp
                         {
                             var userLevel = ChooseUserLevel();
 
-                            var original = WapConfigurationManagerIntegration.GetExeConfigurationUrlRoot(userLevel);
+                            var original = WapConfigurationManagerHelper.GetExeConfigurationUrlRoot(userLevel);
 
                             Console.WriteLine($"original: {original}");
 
                             Process.Start("EXPLORER.EXE", $@"/select,""{original}""");
 
-                            var redirected = WapConfigurationManagerIntegration.GetRedirectedExeConfigurationUrlRoot(userLevel);
+                            var redirected = WapConfigurationManagerHelper.GetExeConfigurationUrlRootRedirected(userLevel);
 
                             if (redirected != null)
                             {
