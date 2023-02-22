@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="0c69a94b-af60-4689-a988-f2021025602b"
-    Publisher="CN=wap-tool-kit"
+    Name="f42d31c0-6193-40e2-b95b-0a5197ef35a5"
+    Publisher="CN=wap-tookit"
     Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>DemoPackage</DisplayName>
-    <PublisherDisplayName>wap-tool-kit</PublisherDisplayName>
+    <DisplayName>TestConsoleAppPackage</DisplayName>
+    <PublisherDisplayName>wap-toolkit</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -31,8 +31,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="DemoPackage"
-        Description="DemoPackage"
+        DisplayName="TestConsoleAppPackage"
+        Description="TestConsoleAppPackage"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">

@@ -4,14 +4,10 @@
     <TargetFramework>net462</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>strong-name-key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\wap-tookit.snk</AssemblyOriginatorKeyFile>
     <VersionPrefix>0.0.0</VersionPrefix>
     <RepositoryUrl>https://github.com/serevo/storex-sdk</RepositoryUrl>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="strong-name-key.snk" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.17134.1000" />

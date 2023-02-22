@@ -14,9 +14,11 @@
 
 
 
-## 設定プロバイダー
+## アプリケーション設定
 
-冒頭ドキュメントに記載の通り、アプリの設定でよく使用されてきた AppData フォルダ への書込みは別の専用の場所にリダイレクトされ、キャッシュ扱いとなります。そして [従来のアプリケーション設定](https://learn.microsoft.com/ja-jp/dotnet/desktop/winforms/advanced/application-settings-for-windows-forms) による方法ではアプリのバージョンアップ時に設定値が失われてしまいます。 [Upgrade](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.applicationsettingsbase.upgrade) メソッドによる異なるバージョン間の設定値の引継ぎもディレクトリ構造が異なる為機能しなくなります。
+冒頭ドキュメントに記載の通り、アプリの設定でよく使用されてきた AppData フォルダ への書込みは別の専用の場所にリダイレクトされます。
+
+[従来のアプリケーション設定](https://learn.microsoft.com/ja-jp/dotnet/desktop/winforms/advanced/application-settings-for-windows-forms) を使用している場合、パッケージのバージョンアップ時に設定ファイルの読み書き先ルートが新しく生成され、前のバージョンの設定値は使用できなくなります。これは [Upgrade](https://learn.microsoft.com/ja-jp/dotnet/api/system.configuration.applicationsettingsbase.upgrade) メソッドも同様です。ただし、アプリの実行可能ファイル (.exe) が厳密名用にアセンブリ署名されている場合、読み書き先のルートは維持される為これらの問題は発生しません。次の幾つかのツールは、何らかの理由により厳密名用にアセンブリ署名することができない場合の回避策として役立ちます。
 
 
 
@@ -40,3 +42,12 @@ partial class MySettings :　ApplicationSettingsBase
 }
 ```
 
+
+
+ただし、サードパーティのライブラリに対してこれらの設定プロバイダーを適用することは通常困難です。そのため、より包括的な解決策として次の `WapConfigurationManagerIntegration` を推奨します。
+
+
+
+### WapConfigurationManagerIntegration
+
+この静的クラスの `MigrateUnsignedExeConfiguration` メソッドは、厳密名用にアセンブリ署名されていないアプリの [従来のアプリケーション設定](https://learn.microsoft.com/ja-jp/dotnet/desktop/winforms/advanced/application-settings-for-windows-forms) の読み書き先ルートについて、パッケージのバージョンアップによって変更される前のルートを特定し、配下のファイルを新しいルートに全てコピーします。通常、このメソッドは設定値がはじめに読み込まれるよりも前に呼び出します。

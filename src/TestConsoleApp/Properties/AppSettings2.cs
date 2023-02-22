@@ -1,8 +1,7 @@
-﻿
-namespace DemoSettingsClassLib.Properties
+﻿namespace TestConsoleApp.Properties
 {
     [System.Configuration.SettingsProvider(typeof(Serevo.WapToolkit.WapDataContainerOrLocalFileSettingsProvider))]
-    partial class Settings
+    partial class AppSettings2
     {
     }
 }
