@@ -5,7 +5,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\wap-tookit.snk</AssemblyOriginatorKeyFile>
-    <RepositoryUrl>https://github.com/serevo/storex-sdk</RepositoryUrl>
+    <RepositoryUrl>https://github.com/serevo/wap-toolkit</RepositoryUrl>
     <Title>WAP Toolkit</Title>
     <Version>1.2.0</Version>
     <Authors>Shinsei Electronics</Authors>
