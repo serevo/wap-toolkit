@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DemoSettingsClassLib.Properties {
+namespace TestConsoleApp.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
-    public sealed partial class Settings2 : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class AppSettings1 : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings2 defaultInstance = ((Settings2)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings2())));
+        private static AppSettings1 defaultInstance = ((AppSettings1)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new AppSettings1())));
         
-        public static Settings2 Default {
+        public static AppSettings1 Default {
             get {
                 return defaultInstance;
             }
@@ -26,12 +26,12 @@ namespace DemoSettingsClassLib.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Int32Value2 {
+        public int Value {
             get {
-                return ((int)(this["Int32Value2"]));
+                return ((int)(this["Value"]));
             }
             set {
-                this["Int32Value2"] = value;
+                this["Value"] = value;
             }
         }
     }
