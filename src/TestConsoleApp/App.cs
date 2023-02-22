@@ -70,7 +70,7 @@ namespace TestConsoleApp
 
                             if (userLevel != ConfigurationUserLevel.None)
                             {
-                                WapConfigurationManagerIntegration.MigrateExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                                WapConfigurationManagerIntegration.MigrateUnsignedExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
                             }
 
                             continue;
