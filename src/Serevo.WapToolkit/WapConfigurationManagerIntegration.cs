@@ -18,7 +18,7 @@ namespace Serevo.WapToolkit
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static void MigrateUnsignedExeConfiguration(ConfigurationUserLevel userLevel)
         {
-            if (userLevel != ConfigurationUserLevel.PerUserRoaming & 
+            if (userLevel != ConfigurationUserLevel.PerUserRoaming &
                 userLevel != ConfigurationUserLevel.PerUserRoamingAndLocal)
                 throw new ArgumentOutOfRangeException(nameof(userLevel));
 
@@ -30,7 +30,11 @@ namespace Serevo.WapToolkit
 
             if (!urlRoot.Parent.Exists) return;
 
-            var prefix = urlRoot.Name.Substring(0, urlRoot.Name.LastIndexOf("_Url_"));
+            var index = urlRoot.Name.LastIndexOf("_Url_", StringComparison.OrdinalIgnoreCase);
+
+            if (index < 0) return;
+
+            var prefix = urlRoot.Name.Substring(0, index);
 
             var latestUrlRoot = urlRoot.Parent
                 .EnumerateDirectories($"{prefix}_url_*", SearchOption.TopDirectoryOnly)
@@ -41,6 +45,8 @@ namespace Serevo.WapToolkit
                     .LastOrDefault()
                     )
                 .FirstOrDefault();
+
+            if (latestUrlRoot is null) return;
 
             var files = latestUrlRoot.GetFiles("*", SearchOption.AllDirectories);
 
