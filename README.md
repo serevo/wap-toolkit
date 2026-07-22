@@ -51,3 +51,14 @@ partial class MySettings :　ApplicationSettingsBase
 ### WapConfigurationManagerIntegration
 
 この静的クラスの `MigrateUnsignedExeConfiguration` メソッドは、厳密名用にアセンブリ署名されていないアプリの [従来のアプリケーション設定](https://learn.microsoft.com/ja-jp/dotnet/desktop/winforms/advanced/application-settings-for-windows-forms) の読み書き先ルートについて、パッケージのバージョンアップによって変更される前のルートを特定し、配下のファイルを新しいルートに全てコピーします。通常、このメソッドは設定値がはじめに読み込まれるよりも前に呼び出します。
+
+
+
+## コードレビュー用 Nuget パッケージ
+
+このリポジトリでは main ブランチへのプルリクエスト時に自動で GitHub Packages に Nuget パッケージが 発行されるよう GitHub Actions を構成しています。発行する Nuget パッケージのバージョンプリフィックスは `0.0.0` とし、サフィックスとして `-pr.{プリリクエスト番号}.{ビルド番号}` としています。
+
+
+[Serevo.WapToolkit | GitHub Packages](https://github.com/serevo/storex-sdk/pkgs/nuget/Serevo.WapToolkit)
+
+[NuGetレジストリの利用 - GitHub Docs](https://docs.github.com/ja/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry)
