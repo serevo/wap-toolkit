@@ -26,6 +26,8 @@ namespace Serevo.WapToolkit
 
             var urlRoot = new DirectoryInfo(GetExeConfigurationUrlRoot(userLevel));
 
+            if (urlRoot.Exists) return;
+
             if (urlRoot.Parent?.Exists != true) return;
 
             var index = urlRoot.Name.LastIndexOf("_Url_", StringComparison.OrdinalIgnoreCase);
